@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
-import './App.css';
+import Customer from './Customer';
+import Header from "./Header";
+import Row from './Row';
+
+const tableStyle = {
+  width: '100%',
+};
 
 class App extends Component {
+  state = {
+    Customers: [
+      new Customer(),
+      new Customer(),
+      new Customer(),
+    ],
+  }
+
   render() {
+    const { Customers } = this.state;
     return (
-      <div className="App">
-        <table border="1" style={{ width: '100%' }}>
-          <tbody>
-            <tr>
-              <th rowspan="2">Tanggal</th>
-              <th rowspan="2">No</th>
-              <th rowspan="2">Keterangan</th>
-              <th colspan="2">Mutasi</th>
-              <th rowspan="2">+/-</th>
-              <th rowspan="2">Saldo</th>
-            </tr>
-            <tr>
-              <th>Debit</th>
-              <th>Kredit</th>
-            </tr>
-            <tr>
-              <td>1.9</td>
-              <td>0.003</td>
-              <td>40%</td>
-              <td>1.7</td>
-              <td>0.002</td>
-              <td>43%</td>
-              <td>TODO</td>
-            </tr>
-          </tbody>
+      <div>
+        <table border='1' style={tableStyle}>
+          <Header />
+          {Customers.map((customer, index) => <Row key={index} {...customer} />)}
         </table>
       </div>
     );
