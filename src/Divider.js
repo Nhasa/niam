@@ -3,7 +3,7 @@ import React from 'react';
 const Divider = () => (
   <tr>
     <td>
-      Baris Sela
+      {'Baris Sela'}
     </td>
   </tr>
 );
