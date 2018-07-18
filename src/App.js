@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Customer from './Customer';
-import Header from "./Header";
+import Header from './Header';
 import Row from './Row';
 
 const tableStyle = {
@@ -8,19 +8,21 @@ const tableStyle = {
 };
 
 class App extends Component {
-  state = {
-    Customers: [
+  constructor(props) {
+    super(props);
+
+    this.state = [
       new Customer(),
       new Customer(),
       new Customer(),
-    ],
+    ];
   }
 
   render() {
     const { Customers } = this.state;
     return (
       <div>
-        <table border='1' style={tableStyle}>
+        <table border="1" style={tableStyle}>
           <Header />
           {Customers.map((customer, index) => <Row key={index} {...customer} />)}
         </table>
