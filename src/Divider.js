@@ -3,7 +3,9 @@ import React from 'react';
 const Divider = () => (
   <tr>
     <td>
-      {'Baris Sela'}
+      <button type="button">
+        {'+'}
+      </button>
     </td>
   </tr>
 );

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DatePicker from 'react-datepicker';
+import Moment from 'moment';
 import Divider from './Divider';
 
 const Row = ({
@@ -8,7 +10,7 @@ const Row = ({
   <tbody>
     <tr>
       <td>
-        {date}
+        <DatePicker selected={Moment(date)} onChange={() => {}} dateFormat="L" />
       </td>
       <td>
         {No}
@@ -17,10 +19,10 @@ const Row = ({
         {Information}
       </td>
       <td>
-        {Mutation.Debit}
+        <input type="text" value={Mutation.Debit} />
       </td>
       <td>
-        {Mutation.Credit}
+        <input type="text" value={Mutation.Credit} />
       </td>
       <td>
         {Sign}

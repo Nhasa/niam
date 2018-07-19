@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  Component,
+} from 'react';
 import Customer from './Customer';
 import Header from './Header';
 import Row from './Row';
@@ -11,20 +13,38 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = [
-      new Customer(),
-      new Customer(),
-      new Customer(),
-    ];
+    this.state = {
+      Customers: [
+        new Customer(),
+        new Customer(),
+        new Customer(),
+      ],
+    };
   }
 
   render() {
-    const { Customers } = this.state;
+    const {
+      Customers,
+    } = this.state;
     return (
       <div>
-        <table border="1" style={tableStyle}>
+        <table
+          border="1"
+          style={
+          tableStyle
+        }
+        >
           <Header />
-          {Customers.map((customer, index) => <Row key={index} {...customer} />)}
+          {
+          Customers.map((customer, index) => (
+            <Row
+              key={
+              index
+            }
+              {...customer
+            }
+            />
+          ))}
         </table>
       </div>
     );
