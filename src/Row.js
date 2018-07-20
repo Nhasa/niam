@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import Moment from 'moment';
 
 const Row = ({
-  Date,
+  Date, Id,
   No, Information, Mutation, Saldo, OnDateChange, OnDebitChange, OnCreditChange, OnDeleteClick,
 }) => {
   const selectedValue = Date ? Moment(Date) : null;
@@ -36,13 +36,14 @@ const Row = ({
         {Saldo.Saldo2}
       </td>
       <td>
-        <input type="button" value="X" onClick={OnDeleteClick} />
+        <input type="button" value="X" onClick={() => OnDeleteClick({ PaymentId: Id })} />
       </td>
     </tr>
   );
 };
 
 Row.propTypes = {
+  Id: PropTypes.string.isRequired,
   Date: PropTypes.instanceOf(Moment).isRequired,
   No: PropTypes.number.isRequired,
   Information: PropTypes.string.isRequired,

@@ -4,7 +4,7 @@ class Saldo {
   constructor(saldo = 0) {
     this.Saldo1 = 0;
     this.Saldo2 = 0;
-    if (saldo > 0) {
+    if (saldo >= 0) {
       this.Sign = Sign.Plus;
       this.Saldo2 = saldo;
     } else {
