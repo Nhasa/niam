@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Divider = ({ OnAddClick }) => (
+const Divider = ({ OnAddClick, Text }) => (
   <tr>
-    <td>
-      <input type="button" value="+" onClick={OnAddClick} />
+    <td colSpan="9">
+      <input type="button" value={`+ ${Text}`} onClick={OnAddClick} />
     </td>
   </tr>
 );
 
 Divider.propTypes = {
   OnAddClick: PropTypes.func.isRequired,
+  Text: PropTypes.string.isRequired,
 };
 
 export default Divider;

@@ -22,6 +22,9 @@ const Header = () => (
       <th colSpan="2">
         {Customer.Saldo}
       </th>
+      <th rowSpan="2">
+        {'Hapus'}
+      </th>
     </tr>
     <tr>
       <th>

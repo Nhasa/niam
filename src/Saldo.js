@@ -1,7 +1,16 @@
+import { Sign } from './Constants';
+
 class Saldo {
-  constructor(saldo = {}) {
-    this.Saldo1 = saldo.Saldo1 || 0;
-    this.Saldo2 = saldo.Saldo2 || 0;
+  constructor(saldo = 0) {
+    this.Saldo1 = 0;
+    this.Saldo2 = 0;
+    if (saldo > 0) {
+      this.Sign = Sign.Plus;
+      this.Saldo2 = saldo;
+    } else {
+      this.Sign = Sign.Minus;
+      this.Saldo1 = saldo;
+    }
   }
 }
 

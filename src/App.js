@@ -2,6 +2,7 @@ import React, {
   Component,
 } from 'react';
 
+import { Transaction as TRANSACTION } from './Constants';
 import Header from './Header';
 import Transaction from './Transaction';
 import Divider from './Divider';
@@ -22,6 +23,7 @@ class App extends Component {
 
     this.OnAddTransaction = this.OnAddTransaction.bind(this);
     this.OnAddPayment = this.OnAddPayment.bind(this);
+    this.OnNewCustomer = this.OnNewCustomer.bind(this);
   }
 
   OnAddTransaction() {
@@ -42,12 +44,20 @@ class App extends Component {
     }));
   }
 
+  OnNewCustomer() {
+    this.setState({
+      Transactions: [],
+    });
+  }
+
   render() {
     const {
       Transactions,
     } = this.state;
+
     return (
       <div>
+        <input type="button" value="Kustomer Baru" onClick={this.OnNewCustomer} />
         <table
           border="1"
           style={
@@ -64,7 +74,9 @@ class App extends Component {
               />
             ))
           }
-          <Divider OnAddClick={this.OnAddTransaction} />
+          <tbody>
+            <Divider OnAddClick={this.OnAddTransaction} Text={TRANSACTION.Transaction} />
+          </tbody>
         </table>
       </div>
     );

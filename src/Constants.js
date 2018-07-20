@@ -21,3 +21,7 @@ export const Saldo = {
   Saldo1: 'Saldo 1',
   Saldo2: 'Saldo 2',
 };
+
+export const Transaction = {
+  Transaction: 'Transaksi',
+};
