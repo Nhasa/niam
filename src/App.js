@@ -2,7 +2,7 @@ import React, {
   Component,
 } from 'react';
 
-import { Transaction as TRANSACTION } from './Constants';
+import { Mutation, Transaction as TRANSACTION } from './Constants';
 import Header from './Header';
 import Transaction from './Transaction';
 import Divider from './Divider';
@@ -24,12 +24,10 @@ class App extends Component {
     this.OnAddPayment = this.OnAddPayment.bind(this);
     this.OnNewCustomer = this.OnNewCustomer.bind(this);
     this.OnDeleteClick = this.OnDeleteClick.bind(this);
-  }
-
-  OnAddTransaction() {
-    this.setState(prevState => ({
-      Transactions: [...prevState.Transactions, new Transaction()],
-    }));
+    this.OnDebitChange = this.OnDebitChange.bind(this);
+    this.OnCreditChange = this.OnCreditChange.bind(this);
+    this.OnMutationChange = this.OnMutationChange.bind(this);
+    this.OnDateChange = this.OnDateChange.bind(this);
   }
 
   OnAddPayment(Id) {
@@ -44,19 +42,59 @@ class App extends Component {
     }));
   }
 
-  OnNewCustomer() {
-    this.setState({
-      Transactions: [],
+  OnAddTransaction() {
+    this.setState(prevState => ({
+      Transactions: [...prevState.Transactions, new Transaction()],
+    }));
+  }
+
+  OnCreditChange({ Id, PaymentId, Value }) {
+    this.OnMutationChange({
+      Id, PaymentId, Value, Type: 'Credit',
+    });
+  }
+
+  OnDateChange({ Id, PaymentId, date }) {
+    let updateTransactions;
+    if (PaymentId) {
+      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
+        if (transaction.Id === Id) {
+          const updatedPayment = transaction.Payments.find(payment => payment.Id === PaymentId);
+          updatedPayment.Date = date;
+        }
+
+        return transaction;
+      })
+      );
+    } else {
+      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
+        if (transaction.Id === Id) {
+          const updatedTransaction = new Transaction(transaction);
+          updatedTransaction.Date = date;
+        }
+
+        return transaction;
+      }));
+    }
+
+    this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
+  }
+
+  OnDebitChange({ Id, PaymentId, Value }) {
+    this.OnMutationChange({
+      Id, PaymentId, Value, Type: Mutation.Debit,
     });
   }
 
   OnDeleteClick({ Id, PaymentId }) {
-    let updatedTransactions;
+    let updateTransactions;
     if (PaymentId) {
-      updatedTransactions = prevState => (prevState.Transactions.map((transaction) => {
+      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
         if (transaction.Id === Id) {
-          const updatedTransaction = new Transaction();
-          updatedTransaction.Payments = transaction.Payments.filter(payment => payment.Id !== PaymentId);
+          const updatedTransaction = new Transaction(transaction);
+          updatedTransaction.Payments = transaction.Payments.filter(
+            payment => payment.Id !== PaymentId,
+          );
 
           return updatedTransaction;
         }
@@ -65,10 +103,45 @@ class App extends Component {
       })
       );
     } else {
-      updatedTransactions = prevState => prevState.Transactions.filter(transaction => transaction.Id !== Id);
+      updateTransactions = prevState =>
+        prevState.Transactions.filter(transaction => transaction.Id !== Id);
     }
 
-    this.setState(prevState => ({ Transactions: updatedTransactions(prevState) }));
+    this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
+  }
+
+  OnMutationChange({
+    Id, PaymentId, Value, Type,
+  }) {
+    let updateTransactions;
+    if (PaymentId) {
+      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
+        if (transaction.Id === Id) {
+          const updatedPayment = transaction.Payments.find(payment => payment.Id === PaymentId);
+          updatedPayment.Mutation[Type] = Value;
+        }
+
+        return transaction;
+      })
+      );
+    } else {
+      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
+        if (transaction.Id === Id) {
+          const updatedTransaction = new Transaction(transaction);
+          updatedTransaction.Mutation[Type] = Value;
+        }
+
+        return transaction;
+      }));
+    }
+
+    this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
+  }
+
+  OnNewCustomer() {
+    this.setState({
+      Transactions: [],
+    });
   }
 
   render() {
@@ -93,6 +166,9 @@ class App extends Component {
                 {...transaction}
                 OnAddClick={this.OnAddPayment}
                 OnDeleteClick={this.OnDeleteClick}
+                OnDebitChange={this.OnDebitChange}
+                OnCreditChange={this.OnCreditChange}
+                OnDateChange={this.OnDateChange}
               />
             ))
           }

@@ -4,15 +4,23 @@ import DatePicker from 'react-datepicker';
 import Moment from 'moment';
 
 const Row = ({
-  Date, Id,
-  No, Information, Mutation, Saldo, OnDateChange, OnDebitChange, OnCreditChange, OnDeleteClick,
+  Date,
+  Id: PaymentId,
+  No,
+  Information,
+  Mutation,
+  Saldo,
+  OnDateChange,
+  OnDebitChange,
+  OnCreditChange,
+  OnDeleteClick,
 }) => {
   const selectedValue = Date ? Moment(Date) : null;
 
   return (
     <tr>
       <td>
-        <DatePicker selected={selectedValue} onChange={OnDateChange} dateFormat="L" />
+        <DatePicker selected={selectedValue} onChange={date => OnDateChange({ PaymentId, date })} dateFormat="L" />
       </td>
       <td>
         {No}
@@ -21,10 +29,10 @@ const Row = ({
         {Information}
       </td>
       <td>
-        <input type="text" value={Mutation.Debit} onChange={OnDebitChange} />
+        <input type="text" value={Mutation.Debit} onChange={e => OnDebitChange({ PaymentId, Value: e.target.value })} />
       </td>
       <td>
-        <input type="text" value={Mutation.Credit} onChange={OnCreditChange} />
+        <input type="text" value={Mutation.Credit} onChange={e => OnCreditChange({ PaymentId, Value: e.target.value })} />
       </td>
       <td>
         {Saldo.Sign}
@@ -36,7 +44,7 @@ const Row = ({
         {Saldo.Saldo2}
       </td>
       <td>
-        <input type="button" value="X" onClick={() => OnDeleteClick({ PaymentId: Id })} />
+        <input type="button" value="X" onClick={() => OnDeleteClick({ PaymentId })} />
       </td>
     </tr>
   );
