@@ -5,7 +5,7 @@ import Saldo from './Saldo';
 
 class Payment {
   constructor(payment = {}) {
-    this.Id = uuid();
+    this.Id = payment.Id || uuid();
     this.Date = payment.Date || Moment();
     this.No = payment.No || 0;
     this.Information = payment.Information || '';

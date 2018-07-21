@@ -5,7 +5,7 @@ class Saldo {
     this.Saldo1 = 0;
     this.Saldo2 = 0;
     if (saldo >= 0) {
-      this.Sign = Sign.Plus;
+      this.Sign = null;
       this.Saldo2 = saldo;
     } else {
       this.Sign = Sign.Minus;

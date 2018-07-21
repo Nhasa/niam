@@ -26,8 +26,9 @@ class App extends Component {
     this.OnDeleteClick = this.OnDeleteClick.bind(this);
     this.OnDebitChange = this.OnDebitChange.bind(this);
     this.OnCreditChange = this.OnCreditChange.bind(this);
-    this.OnMutationChange = this.OnMutationChange.bind(this);
+    this.OnMutationChange = this.OnPropChange.bind(this);
     this.OnDateChange = this.OnDateChange.bind(this);
+    this.OnInformationChange = this.OnInformationChange.bind(this);
   }
 
   OnAddPayment(Id) {
@@ -48,41 +49,21 @@ class App extends Component {
     }));
   }
 
-  OnCreditChange({ Id, PaymentId, Value }) {
-    this.OnMutationChange({
-      Id, PaymentId, Value, Type: 'Credit',
+  OnCreditChange(props) {
+    this.OnPropChange({
+      ...props, Type: 'Credit', Prop: 'Mutation',
     });
   }
 
-  OnDateChange({ Id, PaymentId, date }) {
-    let updateTransactions;
-    if (PaymentId) {
-      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
-        if (transaction.Id === Id) {
-          const updatedPayment = transaction.Payments.find(payment => payment.Id === PaymentId);
-          updatedPayment.Date = date;
-        }
-
-        return transaction;
-      })
-      );
-    } else {
-      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
-        if (transaction.Id === Id) {
-          const updatedTransaction = new Transaction(transaction);
-          updatedTransaction.Date = date;
-        }
-
-        return transaction;
-      }));
-    }
-
-    this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
+  OnDateChange(props) {
+    this.OnPropChange({
+      ...props, Prop: 'Date',
+    });
   }
 
-  OnDebitChange({ Id, PaymentId, Value }) {
-    this.OnMutationChange({
-      Id, PaymentId, Value, Type: Mutation.Debit,
+  OnDebitChange(props) {
+    this.OnPropChange({
+      ...props, Prop: 'Mutation', Type: Mutation.Debit,
     });
   }
 
@@ -110,15 +91,26 @@ class App extends Component {
     this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
   }
 
-  OnMutationChange({
-    Id, PaymentId, Value, Type,
+  OnInformationChange(props) {
+    this.OnPropChange({
+      ...props, Prop: 'Information',
+    });
+  }
+
+  OnPropChange({
+    Id, PaymentId, Value, Type, Prop,
   }) {
     let updateTransactions;
-    if (PaymentId) {
+    if (PaymentId !== Id) {
       updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
         if (transaction.Id === Id) {
           const updatedPayment = transaction.Payments.find(payment => payment.Id === PaymentId);
-          updatedPayment.Mutation[Type] = Value;
+
+          if (Type) {
+            updatedPayment[Prop][Type] = Value;
+          } else {
+            updatedPayment[Prop] = Value;
+          }
         }
 
         return transaction;
@@ -128,7 +120,14 @@ class App extends Component {
       updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
         if (transaction.Id === Id) {
           const updatedTransaction = new Transaction(transaction);
-          updatedTransaction.Mutation[Type] = Value;
+
+          if (Type) {
+            updatedTransaction[Prop][Type] = Value;
+          } else {
+            updatedTransaction[Prop] = Value;
+          }
+
+          return updatedTransaction;
         }
 
         return transaction;
@@ -160,15 +159,17 @@ class App extends Component {
         >
           <Header />
           {
-            Transactions.map(transaction => (
+            Transactions.map((transaction, index) => (
               <RowGroup
                 key={transaction.Id}
                 {...transaction}
+                No={index + 1}
                 OnAddClick={this.OnAddPayment}
                 OnDeleteClick={this.OnDeleteClick}
                 OnDebitChange={this.OnDebitChange}
                 OnCreditChange={this.OnCreditChange}
                 OnDateChange={this.OnDateChange}
+                OnInformationChange={this.OnInformationChange}
               />
             ))
           }

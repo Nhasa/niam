@@ -14,41 +14,56 @@ const Row = ({
   OnDebitChange,
   OnCreditChange,
   OnDeleteClick,
-}) => {
-  const selectedValue = Date ? Moment(Date) : null;
-
-  return (
+  Payments,
+  OnInformationChange,
+}) =>
+  (
     <tr>
       <td>
-        <DatePicker selected={selectedValue} onChange={date => OnDateChange({ PaymentId, date })} dateFormat="L" />
+        <DatePicker selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
       </td>
       <td>
-        {No}
+        {
+          No > 0
+            ? No
+            : null
+        }
       </td>
       <td>
-        {Information}
+        {<input type="text" value={Information} onChange={e => OnInformationChange({ PaymentId, Value: e.target.value })} />}
       </td>
       <td>
-        <input type="text" value={Mutation.Debit} onChange={e => OnDebitChange({ PaymentId, Value: e.target.value })} />
+        {
+          !Payments
+            ? <input type="text" value={Mutation.Debit} onChange={e => OnDebitChange({ PaymentId, Value: e.target.value })} />
+            : <div />
+        }
       </td>
       <td>
-        <input type="text" value={Mutation.Credit} onChange={e => OnCreditChange({ PaymentId, Value: e.target.value })} />
+        {
+          Payments
+            ? <input type="text" value={Mutation.Credit} onChange={e => OnCreditChange({ PaymentId, Value: e.target.value })} />
+            : <div />
+        }
       </td>
       <td>
         {Saldo.Sign}
       </td>
       <td>
-        {Saldo.Saldo1}
+        {
+          Saldo.Sign ? Saldo.Saldo1 : null
+        }
       </td>
       <td>
-        {Saldo.Saldo2}
+        {
+          !Saldo.Sign ? Saldo.Saldo2 : null
+        }
       </td>
       <td>
         <input type="button" value="X" onClick={() => OnDeleteClick({ PaymentId })} />
       </td>
     </tr>
   );
-};
 
 Row.propTypes = {
   Id: PropTypes.string.isRequired,
@@ -61,6 +76,12 @@ Row.propTypes = {
   OnCreditChange: PropTypes.func.isRequired,
   OnDebitChange: PropTypes.func.isRequired,
   OnDeleteClick: PropTypes.func.isRequired,
+  Payments: PropTypes.arrayOf(PropTypes.shape({})),
+  OnInformationChange: PropTypes.func.isRequired,
+};
+
+Row.defaultProps = {
+  Payments: null,
 };
 
 export default Row;

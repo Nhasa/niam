@@ -7,7 +7,14 @@ import { Customer } from './Constants';
 
 const RowGroup = (props) => {
   const {
-    OnAddClick, Id, Payments, OnDeleteClick, OnCreditChange, OnDebitChange, OnDateChange,
+    OnAddClick,
+    Id,
+    Payments,
+    OnDeleteClick,
+    OnCreditChange,
+    OnDebitChange,
+    OnDateChange,
+    OnInformationChange,
   } = props;
 
   return (
@@ -15,20 +22,21 @@ const RowGroup = (props) => {
       <Row
         {...props}
         OnDeleteClick={() => OnDeleteClick({ Id })}
-        OnCreditChange={({ Value }) => OnCreditChange({ Id, Value })}
-        OnDebitChange={({ Value }) => OnDebitChange({ Id, Value })}
-        OnDateChange={({ date }) => OnDateChange({ Id, date })}
+        OnCreditChange={args => OnCreditChange({ ...args, Id })}
+        OnDebitChange={args => OnDebitChange({ ...args, Id })}
+        OnDateChange={args => OnDateChange({ ...args, Id })}
+        OnInformationChange={args => OnInformationChange({ ...args, Id })}
       />
       {
-        Payments.map((payment, index) => (
+        Payments.map(payment => (
           <Row
             key={payment.Id}
             {...payment}
-            No={index + 1}
-            OnDeleteClick={({ PaymentId }) => OnDeleteClick({ Id, PaymentId })}
-            OnCreditChange={({ PaymentId, Value }) => OnCreditChange({ Id, PaymentId, Value })}
-            OnDebitChange={({ PaymentId, Value }) => OnDebitChange({ Id, PaymentId, Value })}
-            OnDateChange={({ PaymentId, date }) => OnDateChange({ Id, PaymentId, date })}
+            OnDeleteClick={args => OnDeleteClick({ ...args, Id })}
+            OnCreditChange={args => OnCreditChange({ ...args, Id })}
+            OnDebitChange={args => OnDebitChange({ ...args, Id })}
+            OnDateChange={args => OnDateChange({ ...args, Id })}
+            OnInformationChange={args => OnInformationChange({ ...args, Id })}
           />
         ))
       }
@@ -45,6 +53,7 @@ RowGroup.propTypes = {
   OnDebitChange: PropTypes.func.isRequired,
   OnCreditChange: PropTypes.func.isRequired,
   OnDateChange: PropTypes.func.isRequired,
+  OnInformationChange: PropTypes.func.isRequired,
 };
 
 RowGroup.defaultProps = {

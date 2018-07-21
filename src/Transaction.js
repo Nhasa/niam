@@ -5,7 +5,7 @@ import Mutation from './Mutation';
 
 class Transaction {
   constructor(transaction = {}) {
-    this.Id = uuid();
+    this.Id = transaction.Id || uuid();
     this.Date = transaction.Date || Moment();
     this.No = transaction.No || 0;
     this.Information = transaction.Information || '';
