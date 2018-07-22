@@ -1,2 +1,8 @@
 @import '~react-datepicker/dist/react-datepicker.css';
 @import '~font-awesome/css/font-awesome.css';
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }

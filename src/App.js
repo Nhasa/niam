@@ -8,10 +8,22 @@ import Transaction from './Transaction';
 import Divider from './Divider';
 import Payment from './Payment';
 import RowGroup from './RowGroup';
+import Saldo from './Saldo';
 
 const tableStyle = {
   width: '100%',
 };
+
+const GetUpdatedPayments = (updatedTransaction) => {
+  let saldo = -updatedTransaction.Mutation.Credit;
+  return updatedTransaction.Payments.map((payment) => {
+    const updated = new Payment(payment);
+    saldo += Number(updated.Mutation.Debit);
+    updated.Saldo = new Saldo(saldo);
+    return updated;
+  });
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -104,13 +116,20 @@ class App extends Component {
     if (PaymentId !== Id) {
       updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
         if (transaction.Id === Id) {
-          const updatedPayment = transaction.Payments.find(payment => payment.Id === PaymentId);
+          const updatedTransaction = new Transaction(transaction);
+          const updatedPayment = updatedTransaction.Payments.find(
+            payment => payment.Id === PaymentId,
+          );
 
           if (Type) {
             updatedPayment[Prop][Type] = Value;
           } else {
             updatedPayment[Prop] = Value;
           }
+
+          updatedTransaction.Payments = GetUpdatedPayments(updatedTransaction);
+
+          return updatedTransaction;
         }
 
         return transaction;
@@ -126,6 +145,8 @@ class App extends Component {
           } else {
             updatedTransaction[Prop] = Value;
           }
+
+          updatedTransaction.Payments = GetUpdatedPayments(updatedTransaction);
 
           return updatedTransaction;
         }

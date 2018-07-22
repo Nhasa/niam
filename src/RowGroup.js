@@ -26,6 +26,7 @@ const RowGroup = (props) => {
         OnDebitChange={args => OnDebitChange({ ...args, Id })}
         OnDateChange={args => OnDateChange({ ...args, Id })}
         OnInformationChange={args => OnInformationChange({ ...args, Id })}
+        DeleteText="Transaksi"
       />
       {
         Payments.map(payment => (
@@ -37,6 +38,7 @@ const RowGroup = (props) => {
             OnDebitChange={args => OnDebitChange({ ...args, Id })}
             OnDateChange={args => OnDateChange({ ...args, Id })}
             OnInformationChange={args => OnInformationChange({ ...args, Id })}
+            DeleteText="Mutasi"
           />
         ))
       }

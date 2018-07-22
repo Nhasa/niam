@@ -16,6 +16,7 @@ const Row = ({
   OnDeleteClick,
   Payments,
   OnInformationChange,
+  DeleteText,
 }) =>
   (
     <tr>
@@ -56,11 +57,11 @@ const Row = ({
       </td>
       <td>
         {
-          !Saldo.Sign ? Saldo.Saldo2 : null
+          !Saldo.Sign && !Payments ? Saldo.Saldo2 : null
         }
       </td>
       <td>
-        <input type="button" value="X" onClick={() => OnDeleteClick({ PaymentId })} />
+        <input type="button" value={`x ${DeleteText}`} onClick={() => OnDeleteClick({ PaymentId })} />
       </td>
     </tr>
   );
@@ -78,6 +79,7 @@ Row.propTypes = {
   OnDeleteClick: PropTypes.func.isRequired,
   Payments: PropTypes.arrayOf(PropTypes.shape({})),
   OnInformationChange: PropTypes.func.isRequired,
+  DeleteText: PropTypes.string.isRequired,
 };
 
 Row.defaultProps = {

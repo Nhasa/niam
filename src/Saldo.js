@@ -9,7 +9,7 @@ class Saldo {
       this.Saldo2 = saldo;
     } else {
       this.Sign = Sign.Minus;
-      this.Saldo1 = saldo;
+      this.Saldo1 = Math.abs(saldo);
     }
   }
 }
