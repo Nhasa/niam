@@ -9,5 +9,8 @@ module.exports = {
   },
   "globals": {
     "document": false,
+    "window": false,
+    "navigator": false,
+    "fetch": false,
   },
 };
