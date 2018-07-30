@@ -24,6 +24,17 @@ const GetUpdatedPayments = (updatedTransaction) => {
   });
 };
 
+const GetUpdatedTransactions = (updatedTransactions) => {
+  let saldo = 0;
+  return updatedTransactions.map((transaction) => {
+    const updated = new Transaction(transaction);
+    const lastPayment = transaction.Payments[transaction.Payments.length - 1];
+    saldo += Number(lastPayment ? lastPayment.Saldo.Value : -transaction.Mutation.Credit);
+    updated.Saldo = new Saldo(saldo);
+    return updated;
+  });
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -100,7 +111,9 @@ class App extends Component {
         prevState.Transactions.filter(transaction => transaction.Id !== Id);
     }
 
-    this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
+    this.setState(prevState => ({
+      Transactions: GetUpdatedTransactions(updateTransactions(prevState)),
+    }));
   }
 
   OnInformationChange(props) {
@@ -136,7 +149,7 @@ class App extends Component {
       })
       );
     } else {
-      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
+      updateTransactions = ({ Transactions }) => Transactions.map((transaction) => {
         if (transaction.Id === Id) {
           const updatedTransaction = new Transaction(transaction);
 
@@ -152,10 +165,12 @@ class App extends Component {
         }
 
         return transaction;
-      }));
+      });
     }
 
-    this.setState(prevState => ({ Transactions: updateTransactions(prevState) }));
+    this.setState(prevState => ({
+      Transactions: GetUpdatedTransactions(updateTransactions(prevState)),
+    }));
   }
 
   OnNewCustomer() {

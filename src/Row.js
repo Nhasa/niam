@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment';
+import CurrencyFormat from 'react-currency-format';
 
 const Row = ({
   Date,
@@ -36,14 +37,34 @@ const Row = ({
       <td>
         {
           !Payments
-            ? <input type="text" value={Mutation.Debit} onChange={e => OnDebitChange({ PaymentId, Value: e.target.value })} />
+            ? (
+              <CurrencyFormat
+                value={Mutation.Debit}
+                decimalSeparator=","
+                thousandSeparator="."
+                onValueChange={(values) => {
+                  const { value } = values;
+                  OnDebitChange({ PaymentId, Value: value });
+                }}
+              />
+            )
             : <div />
         }
       </td>
       <td>
         {
           Payments
-            ? <input type="text" value={Mutation.Credit} onChange={e => OnCreditChange({ PaymentId, Value: e.target.value })} />
+            ? (
+              <CurrencyFormat
+                value={Mutation.Credit}
+                decimalSeparator=","
+                thousandSeparator="."
+                onValueChange={(values) => {
+                  const { value } = values;
+                  OnCreditChange({ PaymentId, Value: value });
+                }}
+              />
+            )
             : <div />
         }
       </td>
@@ -52,12 +73,12 @@ const Row = ({
       </td>
       <td>
         {
-          Saldo.Sign ? Saldo.Saldo1 : null
+          !Payments ? Saldo.AbsValue : null
         }
       </td>
       <td>
         {
-          !Saldo.Sign && !Payments ? Saldo.Saldo2 : null
+          Payments ? Saldo.AbsValue : null
         }
       </td>
       <td>

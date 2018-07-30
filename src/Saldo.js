@@ -2,15 +2,10 @@ import { Sign } from './Constants';
 
 class Saldo {
   constructor(saldo = 0) {
-    this.Saldo1 = 0;
-    this.Saldo2 = 0;
-    if (saldo >= 0) {
-      this.Sign = null;
-      this.Saldo2 = saldo;
-    } else {
-      this.Sign = Sign.Minus;
-      this.Saldo1 = Math.abs(saldo);
-    }
+    const number = Number(saldo);
+    this.Sign = number >= 0 ? null : Sign.Minus;
+    this.AbsValue = Math.abs(number);
+    this.Value = number;
   }
 }
 
