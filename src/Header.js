@@ -2,7 +2,7 @@ import React from 'react';
 import { Customer, Mutation, Saldo } from './Constants';
 
 const Header = () => (
-  <thead>
+  <thead className="w3-blue">
     <tr>
       <th rowSpan="2">
         {Customer.Date}

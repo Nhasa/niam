@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Divider = ({ OnAddClick, Text }) => (
   <tr>
     <td colSpan="9">
-      <input type="button" value={`+ ${Text}`} onClick={OnAddClick} />
+      <input type="button" className="w3-btn w3-green w3-block w3-ripple" value={`+ ${Text}`} onClick={OnAddClick} />
     </td>
   </tr>
 );

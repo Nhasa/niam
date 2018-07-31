@@ -185,10 +185,10 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div>
-        <input type="button" value="Kustomer Baru" onClick={this.OnNewCustomer} />
+      <div className="w3-responsive w3-margin w3-card-4">
+        <input type="button" className="w3-btn w3-yellow w3-margin w3-ripple" value="Kustomer Baru" onClick={this.OnNewCustomer} />
         <table
-          border="1"
+          className="w3-table w3-bordered w3-border w3-centered"
           style={
             tableStyle
           }
