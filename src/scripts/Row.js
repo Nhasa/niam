@@ -11,6 +11,7 @@ const badgeClassName = `${inputNoBorderClassName} w3-yellow w3-round-large`;
 const typeText = 'text';
 const thousandSeparator = '.';
 const decimalSeparator = ',';
+const rupiahSymbol = 'Rp. ';
 
 const redColorStyle = {
   color: 'red',
@@ -66,6 +67,7 @@ const Row = ({
           !Payments
             ? (
               <CurrencyFormat
+                prefix={rupiahSymbol}
                 className={inputBorderClassName}
                 style={style}
                 value={Mutation.Debit}
@@ -85,6 +87,7 @@ const Row = ({
           Payments
             ? (
               <CurrencyFormat
+                prefix={rupiahSymbol}
                 className={inputBorderClassName}
                 style={style}
                 value={Mutation.Credit}
@@ -114,6 +117,7 @@ const Row = ({
         {
           !Payments ? (
             <CurrencyFormat
+              prefix={rupiahSymbol}
               style={style}
               className={inputNoBorderClassName}
               value={Saldo.AbsValue}
@@ -128,6 +132,7 @@ const Row = ({
         {
           Payments ? (
             <CurrencyFormat
+              prefix={rupiahSymbol}
               style={redColorStyle}
               className={inputNoBorderClassName}
               value={Saldo.AbsValue}
