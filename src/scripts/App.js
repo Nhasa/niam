@@ -101,7 +101,7 @@ class App extends Component {
   OnDebitChange(props) {
     this.OnPropChange({
       ...props,
-      Prop: Types.Mutation,
+      Prop: Props.Mutation,
       Type: Mutation.Debit,
     });
   }
@@ -216,7 +216,7 @@ class App extends Component {
       <div className="w3-responsive w3-margin w3-card-4">
         <input
           type="button"
-          className="w3-btn w3-yellow w3-margin w3-ripple"
+          className="w3-btn w3-black w3-margin w3-ripple"
           value={APP.NewCustomer}
           onClick={this.OnNewCustomer}
         />

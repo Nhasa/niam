@@ -97,9 +97,15 @@ const Row = ({
         }
       </td>
       <td>
-        <span className={inputNoBorderClassName} style={style}>
-          {Saldo.Sign}
-        </span>
+        {
+          Saldo.Sign
+            ? (
+              <span className={`${inputNoBorderClassName} w3-yellow w3-round-large`}>
+                {Saldo.Sign}
+              </span>
+            )
+            : <nobr />
+        }
       </td>
       <td>
         {
