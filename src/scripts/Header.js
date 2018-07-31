@@ -1,5 +1,7 @@
 import React from 'react';
-import { Customer, Mutation, Saldo } from './Constants';
+import {
+  Customer, Mutation, Saldo, Header as HEADER,
+} from './Constants';
 
 const Header = () => (
   <thead className="w3-blue">
@@ -23,7 +25,7 @@ const Header = () => (
         {Customer.Saldo}
       </th>
       <th rowSpan="2">
-        {'Hapus'}
+        {HEADER.Delete}
       </th>
     </tr>
     <tr>

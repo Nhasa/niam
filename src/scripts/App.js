@@ -2,7 +2,12 @@ import React, {
   Component,
 } from 'react';
 
-import { Mutation, Transaction as TRANSACTION } from './Constants';
+import {
+  Mutation,
+  Transaction as TRANSACTION,
+  App as APP,
+} from './Constants';
+
 import Header from './Header';
 import Transaction from './Transaction';
 import Divider from './Divider';
@@ -10,8 +15,14 @@ import Payment from './Payment';
 import RowGroup from './RowGroup';
 import Saldo from './Saldo';
 
-const tableStyle = {
-  width: '100%',
+const Props = {
+  Mutation: 'Mutation',
+  Date: 'Date',
+  Information: 'Information',
+};
+
+const Types = {
+  Credit: 'Credit',
 };
 
 const GetUpdatedPayments = (updatedTransaction) => {
@@ -74,37 +85,46 @@ class App extends Component {
 
   OnCreditChange(props) {
     this.OnPropChange({
-      ...props, Type: 'Credit', Prop: 'Mutation',
+      ...props,
+      Type: Types.Credit,
+      Prop: Props.Mutation,
     });
   }
 
   OnDateChange(props) {
     this.OnPropChange({
-      ...props, Prop: 'Date',
+      ...props,
+      Prop: Props.Date,
     });
   }
 
   OnDebitChange(props) {
     this.OnPropChange({
-      ...props, Prop: 'Mutation', Type: Mutation.Debit,
+      ...props,
+      Prop: Types.Mutation,
+      Type: Mutation.Debit,
     });
   }
 
-  OnDeleteClick({ Id, PaymentId }) {
+  OnDeleteClick({
+    Id,
+    PaymentId,
+  }) {
     let updateTransactions;
     if (PaymentId) {
-      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
-        if (transaction.Id === Id) {
-          const updatedTransaction = new Transaction(transaction);
-          updatedTransaction.Payments = transaction.Payments.filter(
-            payment => payment.Id !== PaymentId,
-          );
+      updateTransactions = prevState => (
+        prevState.Transactions.map((transaction) => {
+          if (transaction.Id === Id) {
+            const updatedTransaction = new Transaction(transaction);
+            updatedTransaction.Payments = transaction.Payments.filter(
+              payment => payment.Id !== PaymentId,
+            );
 
-          return updatedTransaction;
-        }
+            return updatedTransaction;
+          }
 
-        return transaction;
-      })
+          return transaction;
+        })
       );
     } else {
       updateTransactions = prevState =>
@@ -118,38 +138,46 @@ class App extends Component {
 
   OnInformationChange(props) {
     this.OnPropChange({
-      ...props, Prop: 'Information',
+      ...props,
+      Prop: Props.Information,
     });
   }
 
   OnPropChange({
-    Id, PaymentId, Value, Type, Prop,
+    Id,
+    PaymentId,
+    Value,
+    Type,
+    Prop,
   }) {
     let updateTransactions;
     if (PaymentId !== Id) {
-      updateTransactions = prevState => (prevState.Transactions.map((transaction) => {
-        if (transaction.Id === Id) {
-          const updatedTransaction = new Transaction(transaction);
-          const updatedPayment = updatedTransaction.Payments.find(
-            payment => payment.Id === PaymentId,
-          );
+      updateTransactions = prevState => (
+        prevState.Transactions.map((transaction) => {
+          if (transaction.Id === Id) {
+            const updatedTransaction = new Transaction(transaction);
+            const updatedPayment = updatedTransaction.Payments.find(
+              payment => payment.Id === PaymentId,
+            );
 
-          if (Type) {
-            updatedPayment[Prop][Type] = Value;
-          } else {
-            updatedPayment[Prop] = Value;
+            if (Type) {
+              updatedPayment[Prop][Type] = Value;
+            } else {
+              updatedPayment[Prop] = Value;
+            }
+
+            updatedTransaction.Payments = GetUpdatedPayments(updatedTransaction);
+
+            return updatedTransaction;
           }
 
-          updatedTransaction.Payments = GetUpdatedPayments(updatedTransaction);
-
-          return updatedTransaction;
-        }
-
-        return transaction;
-      })
+          return transaction;
+        })
       );
     } else {
-      updateTransactions = ({ Transactions }) => Transactions.map((transaction) => {
+      updateTransactions = ({
+        Transactions,
+      }) => Transactions.map((transaction) => {
         if (transaction.Id === Id) {
           const updatedTransaction = new Transaction(transaction);
 
@@ -186,12 +214,14 @@ class App extends Component {
 
     return (
       <div className="w3-responsive w3-margin w3-card-4">
-        <input type="button" className="w3-btn w3-yellow w3-margin w3-ripple" value="Kustomer Baru" onClick={this.OnNewCustomer} />
+        <input
+          type="button"
+          className="w3-btn w3-yellow w3-margin w3-ripple"
+          value={APP.NewCustomer}
+          onClick={this.OnNewCustomer}
+        />
         <table
           className="w3-table w3-bordered w3-border w3-centered"
-          style={
-            tableStyle
-          }
         >
           <Header />
           {
@@ -210,7 +240,10 @@ class App extends Component {
             ))
           }
           <tbody>
-            <Divider OnAddClick={this.OnAddTransaction} Text={TRANSACTION.Transaction} />
+            <Divider
+              OnAddClick={this.OnAddTransaction}
+              Text={TRANSACTION.Transaction}
+            />
           </tbody>
         </table>
       </div>

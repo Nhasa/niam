@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Row from './Row';
 import Divider from './Divider';
 import Payment from './Payment';
-import { Customer } from './Constants';
+import { Customer, Transaction } from './Constants';
 
 const RowGroup = (props) => {
   const {
@@ -26,7 +26,7 @@ const RowGroup = (props) => {
         OnDebitChange={args => OnDebitChange({ ...args, Id })}
         OnDateChange={args => OnDateChange({ ...args, Id })}
         OnInformationChange={args => OnInformationChange({ ...args, Id })}
-        DeleteText="Transaksi"
+        DeleteText={Transaction.Transaction}
       />
       {
         Payments.map(payment => (
@@ -38,7 +38,7 @@ const RowGroup = (props) => {
             OnDebitChange={args => OnDebitChange({ ...args, Id })}
             OnDateChange={args => OnDateChange({ ...args, Id })}
             OnInformationChange={args => OnInformationChange({ ...args, Id })}
-            DeleteText="Mutasi"
+            DeleteText={Customer.Mutation}
           />
         ))
       }

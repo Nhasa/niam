@@ -4,6 +4,12 @@ import DatePicker from 'react-datepicker';
 import Moment from 'moment';
 import CurrencyFormat from 'react-currency-format';
 
+const inputBorderClassName = 'w3-input w3-border';
+const inputNoBorderClassName = 'w3-input w3-border-0';
+const typeText = 'text';
+const thousandSeparator = '.';
+const decimalSeparator = ',';
+
 const redColorStyle = {
   color: 'red',
 };
@@ -28,13 +34,13 @@ const Row = ({
   return (
     <tr>
       <td>
-        <DatePicker className="w3-input w3-border " selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
+        <DatePicker className={inputBorderClassName} selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
       </td>
       <td>
         {
           No > 0
             ? (
-              <span className="w3-input w3-border-0" style={style}>
+              <span className={inputNoBorderClassName} style={style}>
                 {No}
               </span>
             )
@@ -43,7 +49,13 @@ const Row = ({
       </td>
       <td>
         {
-          <input style={style} className="w3-input w3-border" type="text" value={Information} onChange={e => OnInformationChange({ PaymentId, Value: e.target.value })} />
+          <input
+            style={style}
+            className={inputBorderClassName}
+            type={typeText}
+            value={Information}
+            onChange={e => OnInformationChange({ PaymentId, Value: e.target.value })}
+          />
         }
       </td>
       <td>
@@ -51,11 +63,11 @@ const Row = ({
           !Payments
             ? (
               <CurrencyFormat
-                className="w3-input w3-border"
+                className={inputBorderClassName}
                 style={style}
                 value={Mutation.Debit}
-                decimalSeparator=","
-                thousandSeparator="."
+                decimalSeparator={decimalSeparator}
+                thousandSeparator={thousandSeparator}
                 onValueChange={(values) => {
                   const { value } = values;
                   OnDebitChange({ PaymentId, Value: value });
@@ -70,11 +82,11 @@ const Row = ({
           Payments
             ? (
               <CurrencyFormat
-                className="w3-input w3-border"
+                className={inputBorderClassName}
                 style={style}
                 value={Mutation.Credit}
-                decimalSeparator=","
-                thousandSeparator="."
+                decimalSeparator={decimalSeparator}
+                thousandSeparator={thousandSeparator}
                 onValueChange={(values) => {
                   const { value } = values;
                   OnCreditChange({ PaymentId, Value: value });
@@ -85,7 +97,7 @@ const Row = ({
         }
       </td>
       <td>
-        <span className="w3-input w3-border-0" style={style}>
+        <span className={inputNoBorderClassName} style={style}>
           {Saldo.Sign}
         </span>
       </td>
@@ -94,11 +106,11 @@ const Row = ({
           !Payments ? (
             <CurrencyFormat
               style={style}
-              className="w3-input w3-border-0"
+              className={inputNoBorderClassName}
               value={Saldo.AbsValue}
-              decimalSeparator=","
-              thousandSeparator="."
-              displayType="text"
+              decimalSeparator={decimalSeparator}
+              thousandSeparator={thousandSeparator}
+              displayType={typeText}
             />
           ) : <nobr />
         }
@@ -108,11 +120,11 @@ const Row = ({
           Payments ? (
             <CurrencyFormat
               style={redColorStyle}
-              className="w3-input w3-border-0"
+              className={inputNoBorderClassName}
               value={Saldo.AbsValue}
-              decimalSeparator=","
-              thousandSeparator="."
-              displayType="text"
+              decimalSeparator={decimalSeparator}
+              thousandSeparator={thousandSeparator}
+              displayType={typeText}
             />
           ) : <nobr />
         }

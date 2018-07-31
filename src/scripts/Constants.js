@@ -25,3 +25,11 @@ export const Saldo = {
 export const Transaction = {
   Transaction: 'Transaksi',
 };
+
+export const Header = {
+  Delete: 'Hapus',
+};
+
+export const App = {
+  NewCustomer: 'Kustomer Baru',
+};
