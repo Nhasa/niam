@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import Moment from 'moment';
 import CurrencyFormat from 'react-currency-format';
+import { Transaction, Customer } from './Constants';
 
 const inputBorderClassName = 'w3-input w3-border';
 const inputNoBorderClassName = 'w3-input w3-border-0';
+const badgeClassName = `${inputNoBorderClassName} w3-yellow w3-round-large`;
 const typeText = 'text';
 const thousandSeparator = '.';
 const decimalSeparator = ',';
@@ -27,12 +29,13 @@ const Row = ({
   OnDeleteClick,
   Payments,
   OnInformationChange,
-  DeleteText,
 }) => {
   const style = Payments ? {} : redColorStyle;
+  const rowClassName = Payments ? '' : 'w3-light-gray';
+  const deleteText = Payments ? Transaction.Transaction : Customer.Mutation;
 
   return (
-    <tr>
+    <tr className={rowClassName}>
       <td>
         <DatePicker className={inputBorderClassName} selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
       </td>
@@ -100,7 +103,7 @@ const Row = ({
         {
           Saldo.Sign
             ? (
-              <span className={`${inputNoBorderClassName} w3-yellow w3-round-large`}>
+              <span className={badgeClassName}>
                 {Saldo.Sign}
               </span>
             )
@@ -136,7 +139,7 @@ const Row = ({
         }
       </td>
       <td>
-        <input type="button" className="w3-btn w3-red w3-block w3-ripple" value={`x ${DeleteText}`} onClick={() => OnDeleteClick({ PaymentId })} />
+        <input type="button" title={deleteText} className="w3-btn w3-ripple w3-hover-red" value="X" onClick={() => OnDeleteClick({ PaymentId })} />
       </td>
     </tr>
   );
@@ -155,7 +158,6 @@ Row.propTypes = {
   OnDeleteClick: PropTypes.func.isRequired,
   Payments: PropTypes.arrayOf(PropTypes.shape({})),
   OnInformationChange: PropTypes.func.isRequired,
-  DeleteText: PropTypes.string.isRequired,
 };
 
 Row.defaultProps = {
