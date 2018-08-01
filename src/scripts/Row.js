@@ -17,6 +17,10 @@ const redColorStyle = {
   color: 'red',
 };
 
+const inputWidthStyle = {
+  minWidth: '160px',
+};
+
 const Row = ({
   Date,
   Id: PaymentId,
@@ -31,20 +35,26 @@ const Row = ({
   Payments,
   OnInformationChange,
 }) => {
-  const style = Payments ? {} : redColorStyle;
+  const inputColorStyle = Payments ? {} : redColorStyle;
   const rowClassName = Payments ? '' : 'w3-light-gray';
   const deleteText = Payments ? Transaction.Transaction : Customer.Mutation;
+  const inputStyle = {
+    ...inputColorStyle,
+    ...inputWidthStyle,
+  };
 
   return (
     <tr className={rowClassName}>
       <td>
-        <DatePicker className={inputBorderClassName} selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
+        <div style={inputWidthStyle}>
+          <DatePicker className={inputBorderClassName} selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
+        </div>
       </td>
       <td>
         {
           No > 0
             ? (
-              <span className={inputNoBorderClassName} style={style}>
+              <span className={inputNoBorderClassName} style={inputColorStyle}>
                 {No}
               </span>
             )
@@ -54,7 +64,7 @@ const Row = ({
       <td>
         {
           <input
-            style={style}
+            style={inputStyle}
             className={inputBorderClassName}
             type={typeText}
             value={Information}
@@ -69,7 +79,7 @@ const Row = ({
               <CurrencyFormat
                 prefix={rupiahSymbol}
                 className={inputBorderClassName}
-                style={style}
+                style={inputStyle}
                 value={Mutation.Debit}
                 decimalSeparator={decimalSeparator}
                 thousandSeparator={thousandSeparator}
@@ -89,7 +99,7 @@ const Row = ({
               <CurrencyFormat
                 prefix={rupiahSymbol}
                 className={inputBorderClassName}
-                style={style}
+                style={inputStyle}
                 value={Mutation.Credit}
                 decimalSeparator={decimalSeparator}
                 thousandSeparator={thousandSeparator}
@@ -118,7 +128,7 @@ const Row = ({
           !Payments ? (
             <CurrencyFormat
               prefix={rupiahSymbol}
-              style={style}
+              style={inputColorStyle}
               className={inputNoBorderClassName}
               value={Saldo.AbsValue}
               decimalSeparator={decimalSeparator}
