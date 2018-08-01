@@ -40,7 +40,7 @@ const Row = ({
   const deleteText = Payments ? Transaction.Transaction : Customer.Mutation;
   const inputStyle = {
     ...inputColorStyle,
-    ...inputWidthStyle,
+    // ...inputWidthStyle,
   };
 
   return (

@@ -221,6 +221,7 @@ class App extends Component {
           onClick={this.OnNewCustomer}
         />
         <table
+          border="1"
           className="w3-table w3-bordered w3-border w3-centered"
         >
           <Header />
