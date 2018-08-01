@@ -15,6 +15,10 @@ import Payment from './Payment';
 import RowGroup from './RowGroup';
 import Saldo from './Saldo';
 
+const tableStyle = {
+  width: '100%',
+};
+
 const Props = {
   Mutation: 'Mutation',
   Date: 'Date',
@@ -221,6 +225,7 @@ class App extends Component {
           onClick={this.OnNewCustomer}
         />
         <table
+          style={tableStyle}
           border="1"
           className="w3-table w3-bordered w3-border w3-centered"
         >

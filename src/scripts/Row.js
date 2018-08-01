@@ -18,7 +18,7 @@ const redColorStyle = {
 };
 
 const inputWidthStyle = {
-  minWidth: '160px',
+  // minWidth: '160px',
 };
 
 const Row = ({
@@ -40,7 +40,7 @@ const Row = ({
   const deleteText = Payments ? Transaction.Transaction : Customer.Mutation;
   const inputStyle = {
     ...inputColorStyle,
-    // ...inputWidthStyle,
+    ...inputWidthStyle,
   };
 
   return (
