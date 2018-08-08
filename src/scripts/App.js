@@ -217,7 +217,7 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div className="w3-responsive w3-margin w3-card-4">
+      <div>
         <input
           type="button"
           className="w3-btn w3-black w3-margin w3-ripple"
@@ -227,7 +227,7 @@ class App extends Component {
         <table
           style={tableStyle}
           border="1"
-          className="w3-table w3-bordered w3-border w3-centered"
+          className="w3-table w3-bordered w3-centered w3-card"
         >
           <Header />
           {

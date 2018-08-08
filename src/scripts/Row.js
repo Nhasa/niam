@@ -18,7 +18,7 @@ const redColorStyle = {
 };
 
 const inputWidthStyle = {
-  // minWidth: '160px',
+  minWidth: '160px',
 };
 
 const Row = ({
