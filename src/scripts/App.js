@@ -13,7 +13,7 @@ import Transaction from './Transaction';
 import Divider from './Divider';
 import Payment from './Payment';
 import RowGroup from './RowGroup';
-import Saldo from './Saldo';
+import Customer from './Customer';
 
 const tableStyle = {
   width: '100%',
@@ -27,27 +27,6 @@ const Props = {
 
 const Types = {
   Credit: 'Credit',
-};
-
-const GetUpdatedPayments = (updatedTransaction) => {
-  let saldo = -updatedTransaction.Mutation.Credit;
-  return updatedTransaction.Payments.map((payment) => {
-    const updated = new Payment(payment);
-    saldo += Number(updated.Mutation.Debit);
-    updated.Saldo = new Saldo(saldo);
-    return updated;
-  });
-};
-
-const GetUpdatedTransactions = (updatedTransactions) => {
-  let saldo = 0;
-  return updatedTransactions.map((transaction) => {
-    const updated = new Transaction(transaction);
-    const lastPayment = transaction.Payments[transaction.Payments.length - 1];
-    saldo += Number(lastPayment ? lastPayment.Saldo.Value : -transaction.Mutation.Credit);
-    updated.Saldo = new Saldo(saldo);
-    return updated;
-  });
 };
 
 class App extends Component {
@@ -136,7 +115,7 @@ class App extends Component {
     }
 
     this.setState(prevState => ({
-      Transactions: GetUpdatedTransactions(updateTransactions(prevState)),
+      Transactions: Customer.GetUpdatedTransactions(updateTransactions(prevState)),
     }));
   }
 
@@ -170,7 +149,7 @@ class App extends Component {
               updatedPayment[Prop] = Value;
             }
 
-            updatedTransaction.Payments = GetUpdatedPayments(updatedTransaction);
+            updatedTransaction.updatePayments();
 
             return updatedTransaction;
           }
@@ -191,7 +170,7 @@ class App extends Component {
             updatedTransaction[Prop] = Value;
           }
 
-          updatedTransaction.Payments = GetUpdatedPayments(updatedTransaction);
+          updatedTransaction.updatePayments()
 
           return updatedTransaction;
         }
@@ -201,7 +180,7 @@ class App extends Component {
     }
 
     this.setState(prevState => ({
-      Transactions: GetUpdatedTransactions(updateTransactions(prevState)),
+      Transactions: Customer.GetUpdatedTransactions(updateTransactions(prevState)),
     }));
   }
 
