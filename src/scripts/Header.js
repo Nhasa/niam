@@ -16,13 +16,13 @@ const Header = () => (
         {Customer.Information}
       </th>
       <th colSpan="2">
-        {Customer.Mutation}
+        {`${Customer.Mutation} (Rp)`}
       </th>
       <th rowSpan="2">
         {Customer.Sign}
       </th>
       <th colSpan="2">
-        {Customer.Saldo}
+        {`${Customer.Saldo} (Rp)`}
       </th>
       <th rowSpan="2">
         {HEADER.Delete}

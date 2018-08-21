@@ -1,3 +1,9 @@
 @import '~react-datepicker/dist/react-datepicker.css';
-@import '~font-awesome/css/font-awesome.css';
 /* @import './w3.css'; */
+
+.react-datepicker-manager,
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  width: 100%;
+} 

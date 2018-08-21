@@ -11,7 +11,6 @@ const badgeClassName = `${inputNoBorderClassName} w3-yellow w3-round-large`;
 const typeText = 'text';
 const thousandSeparator = '.';
 const decimalSeparator = ',';
-const rupiahSymbol = 'Rp. ';
 
 const redColorStyle = {
   color: 'red',
@@ -46,7 +45,7 @@ const Row = ({
   return (
     <tr className={rowClassName}>
       <td>
-        <div style={inputWidthStyle}>
+        <div style={inputWidthStyle} className="datepicker-container">
           <DatePicker className={inputBorderClassName} selected={Date} onChange={Value => OnDateChange({ PaymentId, Value })} dateFormat="L" />
         </div>
       </td>
@@ -77,7 +76,6 @@ const Row = ({
           !Payments
             ? (
               <CurrencyFormat
-                prefix={rupiahSymbol}
                 className={inputBorderClassName}
                 style={inputStyle}
                 value={Mutation.Debit}
@@ -97,7 +95,6 @@ const Row = ({
           Payments
             ? (
               <CurrencyFormat
-                prefix={rupiahSymbol}
                 className={inputBorderClassName}
                 style={inputStyle}
                 value={Mutation.Credit}
@@ -127,7 +124,6 @@ const Row = ({
         {
           !Payments ? (
             <CurrencyFormat
-              prefix={rupiahSymbol}
               style={inputColorStyle}
               className={inputNoBorderClassName}
               value={Saldo.AbsValue}
@@ -142,7 +138,6 @@ const Row = ({
         {
           Payments ? (
             <CurrencyFormat
-              prefix={rupiahSymbol}
               style={redColorStyle}
               className={inputNoBorderClassName}
               value={Saldo.AbsValue}
