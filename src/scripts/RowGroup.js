@@ -17,6 +17,18 @@ const RowGroup = (props) => {
     OnInformationChange,
   } = props;
 
+  const payments = Payments.map(payment => (
+    <Row
+      key={payment.Id}
+      {...payment}
+      OnDeleteClick={args => OnDeleteClick({ ...args, Id })}
+      OnCreditChange={args => OnCreditChange({ ...args, Id })}
+      OnDebitChange={args => OnDebitChange({ ...args, Id })}
+      OnDateChange={args => OnDateChange({ ...args, Id })}
+      OnInformationChange={args => OnInformationChange({ ...args, Id })}
+    />
+  ))
+
   return (
     <tbody>
       <Row
@@ -27,19 +39,7 @@ const RowGroup = (props) => {
         OnDateChange={args => OnDateChange({ ...args, Id })}
         OnInformationChange={args => OnInformationChange({ ...args, Id })}
       />
-      {
-        Payments.map(payment => (
-          <Row
-            key={payment.Id}
-            {...payment}
-            OnDeleteClick={args => OnDeleteClick({ ...args, Id })}
-            OnCreditChange={args => OnCreditChange({ ...args, Id })}
-            OnDebitChange={args => OnDebitChange({ ...args, Id })}
-            OnDateChange={args => OnDateChange({ ...args, Id })}
-            OnInformationChange={args => OnInformationChange({ ...args, Id })}
-          />
-        ))
-      }
+      {payments}
       <Divider ClassName="w3-light-gray" OnAddClick={() => OnAddClick(Id)} Text={Customer.Mutation} />
     </tbody>
   );

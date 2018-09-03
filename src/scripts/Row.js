@@ -42,6 +42,71 @@ const Row = ({
     ...inputWidthStyle,
   };
 
+  const no = No > 0
+  ? (
+    <span className={inputNoBorderClassName} style={inputColorStyle}>
+      {No}
+    </span>
+  )
+  : <nobr />
+  const debit = !Payments
+  ? (
+    <CurrencyFormat
+      className={inputBorderClassName}
+      style={inputStyle}
+      value={Mutation.Debit}
+      decimalSeparator={decimalSeparator}
+      thousandSeparator={thousandSeparator}
+      onValueChange={(values) => {
+        const { value } = values;
+        OnDebitChange({ PaymentId, Value: value });
+      }}
+    />
+  )
+  : <nobr />
+  const credit = Payments
+  ? (
+    <CurrencyFormat
+      className={inputBorderClassName}
+      style={inputStyle}
+      value={Mutation.Credit}
+      decimalSeparator={decimalSeparator}
+      thousandSeparator={thousandSeparator}
+      onValueChange={(values) => {
+        const { value } = values;
+        OnCreditChange({ PaymentId, Value: value });
+      }}
+    />
+  )
+  : <nobr />
+  const sign =Saldo.Sign
+  ? (
+    <span className={badgeClassName}>
+      {Saldo.Sign}
+    </span>
+  )
+  : <nobr />
+  const saldo1=!Payments ? (
+    <CurrencyFormat
+      style={inputColorStyle}
+      className={inputNoBorderClassName}
+      value={Saldo.AbsValue}
+      decimalSeparator={decimalSeparator}
+      thousandSeparator={thousandSeparator}
+      displayType={typeText}
+    />
+  ) : <nobr />
+  const saldo2 = Payments ? (
+    <CurrencyFormat
+      style={redColorStyle}
+      className={inputNoBorderClassName}
+      value={Saldo.AbsValue}
+      decimalSeparator={decimalSeparator}
+      thousandSeparator={thousandSeparator}
+      displayType={typeText}
+    />
+  ) : <nobr />
+
   return (
     <tr className={rowClassName}>
       <td>
@@ -50,103 +115,31 @@ const Row = ({
         </div>
       </td>
       <td>
-        {
-          No > 0
-            ? (
-              <span className={inputNoBorderClassName} style={inputColorStyle}>
-                {No}
-              </span>
-            )
-            : <nobr />
-        }
+        {no}
       </td>
       <td>
-        {
-          <input
-            style={inputStyle}
-            className={inputBorderClassName}
-            type={typeText}
-            value={Information}
-            onChange={e => OnInformationChange({ PaymentId, Value: e.target.value })}
-          />
-        }
+        <input
+          style={inputStyle}
+          className={inputBorderClassName}
+          type={typeText}
+          value={Information}
+          onChange={e => OnInformationChange({ PaymentId, Value: e.target.value })}
+        />
       </td>
       <td>
-        {
-          !Payments
-            ? (
-              <CurrencyFormat
-                className={inputBorderClassName}
-                style={inputStyle}
-                value={Mutation.Debit}
-                decimalSeparator={decimalSeparator}
-                thousandSeparator={thousandSeparator}
-                onValueChange={(values) => {
-                  const { value } = values;
-                  OnDebitChange({ PaymentId, Value: value });
-                }}
-              />
-            )
-            : <nobr />
-        }
+        {debit}
       </td>
       <td>
-        {
-          Payments
-            ? (
-              <CurrencyFormat
-                className={inputBorderClassName}
-                style={inputStyle}
-                value={Mutation.Credit}
-                decimalSeparator={decimalSeparator}
-                thousandSeparator={thousandSeparator}
-                onValueChange={(values) => {
-                  const { value } = values;
-                  OnCreditChange({ PaymentId, Value: value });
-                }}
-              />
-            )
-            : <nobr />
-        }
+        {credit}
       </td>
       <td>
-        {
-          Saldo.Sign
-            ? (
-              <span className={badgeClassName}>
-                {Saldo.Sign}
-              </span>
-            )
-            : <nobr />
-        }
+        {sign}
       </td>
       <td>
-        {
-          !Payments ? (
-            <CurrencyFormat
-              style={inputColorStyle}
-              className={inputNoBorderClassName}
-              value={Saldo.AbsValue}
-              decimalSeparator={decimalSeparator}
-              thousandSeparator={thousandSeparator}
-              displayType={typeText}
-            />
-          ) : <nobr />
-        }
+        {saldo1}
       </td>
       <td>
-        {
-          Payments ? (
-            <CurrencyFormat
-              style={redColorStyle}
-              className={inputNoBorderClassName}
-              value={Saldo.AbsValue}
-              decimalSeparator={decimalSeparator}
-              thousandSeparator={thousandSeparator}
-              displayType={typeText}
-            />
-          ) : <nobr />
-        }
+        {saldo2}
       </td>
       <td>
         <input type="button" title={deleteText} className="w3-btn w3-ripple w3-hover-red" value="X" onClick={() => OnDeleteClick({ PaymentId })} />

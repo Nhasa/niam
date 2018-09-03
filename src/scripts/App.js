@@ -195,6 +195,20 @@ class App extends Component {
       Transactions,
     } = this.state;
 
+    const transactions = Transactions.map((transaction, index) => (
+      <RowGroup
+        key={transaction.Id}
+        {...transaction}
+        No={index + 1}
+        OnAddClick={this.OnAddPayment}
+        OnDeleteClick={this.OnDeleteClick}
+        OnDebitChange={this.OnDebitChange}
+        OnCreditChange={this.OnCreditChange}
+        OnDateChange={this.OnDateChange}
+        OnInformationChange={this.OnInformationChange}
+      />
+    ));
+
     return (
       <div>
         <input
@@ -209,21 +223,7 @@ class App extends Component {
           className="w3-table w3-bordered w3-centered w3-card"
         >
           <Header />
-          {
-            Transactions.map((transaction, index) => (
-              <RowGroup
-                key={transaction.Id}
-                {...transaction}
-                No={index + 1}
-                OnAddClick={this.OnAddPayment}
-                OnDeleteClick={this.OnDeleteClick}
-                OnDebitChange={this.OnDebitChange}
-                OnCreditChange={this.OnCreditChange}
-                OnDateChange={this.OnDateChange}
-                OnInformationChange={this.OnInformationChange}
-              />
-            ))
-          }
+          {transactions}
           <tbody>
             <Divider
               OnAddClick={this.OnAddTransaction}
