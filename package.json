@@ -61,7 +61,6 @@
     "babel-preset-env": "^1.7.0",
     "nodemon": "^1.18.4"
   },
-  "proxy": "http://localhost:8080",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"

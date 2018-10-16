@@ -2,7 +2,7 @@
     "root": "build/",
     "proxies": {
       "/route": {
-        "origin": "url"
+        "origin": "https://niam.herokuapp.com/"
       }
     },
     "routes": {
